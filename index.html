@@ -6,19 +6,24 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title></title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   </head>
-  <body>
+  <body style="background-color:#000000">
     <div class="container">
       <div class="row">
         <div id="profile">
           <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="card">
+            <div class="card bg-dark text-white border-dark">
               <img class="card-img-top" src="http://placehold.it/300" alt="Card image cap">
               <div class="card-block">
                 <h4 class="card-title"></h4>
                 <p class="card-text"></p>
-                <a href="#" class="btn btn-primary">Button</a>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <a class="btn btn-secondary"><i class="fa fa-github"></i></a>
+                  <a class="btn btn-info"><i class="fa fa-envelope"></i></a>
+                  <a class="btn btn-primary"><i class="fa fa-user"></i></a>
+                </div>
               </div>
             </div>
           </div>
@@ -26,7 +31,7 @@
       </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
     <script charset="utf-8">
 var data = { "data": {
                   "organization": {
@@ -641,19 +646,43 @@ var data = { "data": {
                   }
                 }
               }
+
+              function titleCase(str) {
+                str = str.toLowerCase().split(' ');
+                for (var i = 0; i < str.length; i++) {
+                  str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1); 
+                }
+                return str.join(' ');
+              }
               var profileTemplate = $("#profile").html();
               data.data.organization.teams.edges.forEach(function(edge) {
                 var node = edge.node
+                console.log(node)
+                var base = $('<h1>'+titleCase(node.name)+' <small class="text-muted">' + node.description + '</small></h1><div class="row"></div>')
+                $(".container", base).append("<h1>" + node.name + "</h1>")
                 node.members.edges.forEach(function(edge) {
-                  console.log(edge)
                   var finishedProfile = $(profileTemplate)
                   $(".card-img-top", finishedProfile).attr("src", edge.node.avatarUrl)
                   $(".card-img-top", finishedProfile).css("max-width", "100%")
-                  $(".card-title", finishedProfile).html('<a href="' + edge.node.url + '">' + edge.node.name + '</a><br /><small class="text-muted">' + edge.node.login + '</small>')
-                  $(".card-text", finishedProfile).html(edge.node.bioHTML)
-                  $(".row").append($(finishedProfile)
-                  );
+                  $(".card-img-top", finishedProfile).css("min-width", "100%")
+                  $(".card-title", finishedProfile).html('<a class="text-white" href="' + edge.node.url + '">' + (edge.node.name ? edge.node.name : edge.node.login) + '</a><br /><small class="text-muted">' + edge.node.login + '</small>')
+                  $(".card-text", finishedProfile).html((edge.node.bioHTML ? edge.node.bioHTML : edge.node.login + " has no bio."))
+                  $(".fa-github", finishedProfile).parent().attr("href", edge.node.url)
+                  if (edge.node.websiteUrl) {
+                    $(".fa-user", finishedProfile).parent().attr("href", href)
+                  } else {
+                    $(".fa-user", finishedProfile).parent().remove()
+                  }
+                  if (edge.node.email) {
+                    $(".fa-envelope", finishedProfile).parent().attr("href", "mailto:" + edge.node.email)
+                  } else {
+                    $(".fa-envelope", finishedProfile).parent().remove()
+                  }
+                  var href = !/^(f|ht)tps?:\/\//i.test(edge.node.websiteUrl) ? "http://"+edge.node.websiteUrl : edge.node.websiteUrl
+                  $(".fa-user", finishedProfile).parent().attr("href", href)
+                  var base = $(".row", base).append($(finishedProfile));
                 })
+                $(".container").append(base)
                 $("#profile").remove()
               })
     </script>
