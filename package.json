@@ -5,8 +5,7 @@
 	"main": "server.js",
 	"scripts": {
 		"start": "node server.js",
-		"start:dev": "DEBUG=hs:* nodemon -d 1 -e js -w app.js -w server.js -w views -w routes server.js",
-		"precommit": "lint-staged"
+		"start:dev": "DEBUG=hs:* nodemon -d 1 -e js -w app.js -w server.js -w views -w routes server.js"
 	},
 	"dependencies": {
 		"body-parser": "^1.17.2",
