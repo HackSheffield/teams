@@ -2254,6 +2254,7 @@ ul.icons {
   cursor: default;
   list-style: none;
   padding-left: 0;
+  margin-bottom: 0;
 }
 
 ul.icons li {
@@ -3689,4 +3690,23 @@ a#mlh-trust-badge {
 #mlh-badge-spacer {
   visibility: hidden;
   width: 125px;
+}
+
+.bio {
+  height: 5rem;
+  overflow-y: scroll;
+}
+.profile {
+  margin-bottom:2rem;
+}
+.role {
+  height: 3rem;
+}
+::-webkit-scrollbar {
+    width: 3px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: white;
 }
