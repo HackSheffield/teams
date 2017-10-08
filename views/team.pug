@@ -19,6 +19,12 @@ each team in teams
                                         li
                                             a.icon.fa-globe(href=`${member.websiteUrl.startsWith('http') ? '' : 'http://'}${member.websiteUrl}`)
                                                 span.label Website
+                                    if people[member.login]
+                                        if people[member.login].twitter
+                                            li
+                                                a.icon.fa-twitter(href=`https://twitter.com/${people[member.login].twitter}`)
+
+                                                    span.label Twitter
                                     li
                                         a.icon.fa-github(href=`${member.url}`, target='_blank')
                                             span.label Github

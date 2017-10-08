@@ -1,18 +1,14 @@
-# GitHub Organization Visualiser
+# Teams
 
-Include the following scss as a fix for Bootstrap 4's card columns:
+## A GitHub Organisation Visualiser
 
-     .card-columns {
-       @include media-breakpoint-only(xl) {
-         column-count: 5;
-       }
-       @include media-breakpoint-only(lg) {
-         column-count: 4;
-       }
-       @include media-breakpoint-only(md) {
-         column-count: 3;
-       }
-       @include media-breakpoint-only(sm) {
-         column-count: 2;
-       }
-     } 
+GitHub Organisations are a very private affair, but they're a great way of representing different teams within a group. Teams allows you to present your GitHub organisation to the world, even allowing you to add any extra features not already present in a standard GitHub profile.
+
+## Installation
+
+Set your GraphQL access token to an environment variable named `GITHUB_TOKEN`, and let `npm` do the rest.
+
+```
+npm install
+npm start
+```
