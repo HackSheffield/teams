@@ -1,0 +1,22 @@
+section.wrapper.alt.style1
+    .inner
+        h2.major #{teamname}
+        section.special
+            .row
+                each person in people
+                    article(class='4u 12u(xsmall)')
+                        img.image.fit(src=`${person.avatarUrl}`, alt='Image of Borja')
+                        h3.major #{person.name}
+                        span President
+                        ul.icons
+                            if person.email
+                                li
+                                    a.icon.fa-envelope(href=`mailto:${person.email}`)
+                                        span.label E-mail
+                            if person.websiteUrl
+                                li
+                                    a.icon.fa-globe(href=`${person.websiteUrl.startsWith('http') ? '' : 'http://'}${person.websiteUrl}`)
+                                        span.label Website
+                            li
+                                a.icon.fa-github(href=`${person.url}`, target='_blank')
+                                    span.label Github

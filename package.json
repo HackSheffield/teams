@@ -8,6 +8,7 @@
 		"start:dev": "DEBUG=hs:* nodemon -d 1 -e js -w app.js -w server.js -w views -w routes server.js"
 	},
 	"dependencies": {
+		"axios": "^0.16.2",
 		"body-parser": "^1.17.2",
 		"cookie-parser": "~1.4.3",
 		"debug": "^3.0.0",
