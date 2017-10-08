@@ -1,22 +1,23 @@
-section.wrapper.alt.style1
-    .inner
-        h2.major #{teamname}
-        section.special
-            .row
-                each person in people
-                    article(class='4u 12u(xsmall)')
-                        img.image.fit(src=`${person.avatarUrl}`, alt='Image of Borja')
-                        h3.major #{person.name}
-                        span President
-                        ul.icons
-                            if person.email
+each team in teams
+    section#team.wrapper.alt.style1
+        .inner
+            h2.major #{team.name}
+            section.special
+                .row
+                    each member in team.members
+                        article(class='4u 12u(xsmall)')
+                            img.image.fit(src=`${member.avatarUrl}`, alt='Image of Borja')
+                            h3.major #{member.name || member.login}
+                            span President
+                            ul.icons
+                                if member.email.length
+                                    li
+                                        a.icon.fa-envelope(href=`mailto:${member.email}`)
+                                            span.label E-mail
+                                if member.websiteUrl
+                                    li
+                                        a.icon.fa-globe(href=`${member.websiteUrl.startsWith('http') ? '' : 'http://'}${member.websiteUrl}`)
+                                            span.label Website
                                 li
-                                    a.icon.fa-envelope(href=`mailto:${person.email}`)
-                                        span.label E-mail
-                            if person.websiteUrl
-                                li
-                                    a.icon.fa-globe(href=`${person.websiteUrl.startsWith('http') ? '' : 'http://'}${person.websiteUrl}`)
-                                        span.label Website
-                            li
-                                a.icon.fa-github(href=`${person.url}`, target='_blank')
-                                    span.label Github
+                                    a.icon.fa-github(href=`${member.url}`, target='_blank')
+                                        span.label Github

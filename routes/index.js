@@ -52,8 +52,10 @@ router.get('/', (req, res, next) => {
   axios.post('https://api.github.com/graphql', { query: graphql }, { headers: {'Authorization': `Bearer ${GITHUB_TOKEN}`}})
     .then((graphqlRes) => {
       console.log(graphqlRes.data);
-      const people = graphqlRes.data.data.organization.teams.edges.map(edge => edge.node)[0].members.edges.map(edge => edge.node);
-      res.render('index', { title: 'Teams', people: people, teamname: 'HackSheffield TEAM'});
+      const teams = graphqlRes.data.data.organization.teams.edges.map(edge => edge.node);
+      teams.forEach(team => team.members = team.members.edges.map(edge => edge.node));
+      // const people = graphqlRes.data.data.organization.teams.edges.map(edge => edge.node)[0].members.edges.map(edge => edge.node);
+      res.render('index', { title: 'Teams', teams: teams });
     })
     .catch((err) => {
       console.log(err);
