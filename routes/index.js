@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
+const YAML = require('yamljs');
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 if (!GITHUB_TOKEN) throw new Error("Supply GitHub token");
 
@@ -8,9 +9,7 @@ const graphql = `{
   organization(login:"hacksheffield") {
     avatarUrl
     databaseId
-    repository(name:"people"){
-      name
-      object(expression:"master:_data/people.yml"){
+    repository(name:"people"){ name object(expression:"master:_data/people.yml"){
         ... on Blob {
           text
         }
@@ -53,9 +52,15 @@ router.get('/', (req, res, next) => {
     .then((graphqlRes) => {
       console.log(graphqlRes.data);
       const teams = graphqlRes.data.data.organization.teams.edges.map(edge => edge.node);
+      const people = {};
+      YAML.parse(graphqlRes.data.data.organization.repository.object.text).forEach(person => {
+        people[person.github] = person;
+      });
+
+      console.log(people);
       teams.forEach(team => team.members = team.members.edges.map(edge => edge.node));
       // const people = graphqlRes.data.data.organization.teams.edges.map(edge => edge.node)[0].members.edges.map(edge => edge.node);
-      res.render('index', { title: 'Teams', teams: teams });
+      res.render('index', { title: 'Teams', teams: teams, people });
     })
     .catch((err) => {
       console.log(err);
