@@ -12,3 +12,6 @@ Set your GraphQL access token to an environment variable named `GITHUB_TOKEN`, a
 npm install
 npm start
 ```
+
+
+__mygit.club__ was created with ❤️ and ☕️ in sunny California 🌉
